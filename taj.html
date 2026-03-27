@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Tajnoor</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#0d0a14;
+--gold:#f5c842;
+--rose:#f4a0b5;
+--lav:#b8a4e3;
+--cream:#fdf4e3;
+--muted:#8c8699;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+font-family:'DM Sans',sans-serif;
+background:var(--bg);
+color:var(--cream);
+overflow-x:hidden;
+}
+
+canvas#stars{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-2;
+}
+
+.emoji{
+position:fixed;
+top:-20px;
+font-size:18px;
+animation:fall linear infinite;
+z-index:-1;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh);opacity:0}
+10%{opacity:1}
+100%{transform:translateY(110vh);opacity:0}
+}
+
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:40px 20px;
+text-align:center;
+background:radial-gradient(circle at center,#2a173c,#0d0a14);
+}
+
+.hero-emoji{
+font-size:70px;
+animation:pulse 1.6s infinite;
+margin-bottom:18px;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.22)}
+100%{transform:scale(1)}
+}
+
+h1{
+font-family:'Cormorant Garamond',serif;
+font-weight:300;
+font-size:clamp(3rem,9vw,6.5rem);
+margin-bottom:10px;
+}
+
+h2{
+font-family:'Cormorant Garamond',serif;
+font-weight:300;
+font-size:clamp(1.9rem,5vw,3.2rem);
+color:var(--lav);
+margin-bottom:40px;
+}
+
+em{color:var(--rose)}
+
+.chip{
+font-size:.68rem;
+letter-spacing:.26em;
+border:1px solid var(--gold);
+padding:6px 14px;
+border-radius:999px;
+margin-bottom:18px;
+display:inline-block;
+}
+
+.card{
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:20px;
+padding:36px;
+max-width:640px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 40px rgba(245,200,66,.18);
+transition:.25s ease;
+}
+
+.card:hover{
+transform:translateY(-6px);
+}
+
+p{
+margin-top:18px;
+line-height:1.75;
+color:var(--muted);
+font-size:1.05rem;
+}
+
+button{
+border-radius:999px;
+padding:14px 28px;
+margin-top:28px;
+background:linear-gradient(135deg,#f5c842,#ffd86e);
+border:none;
+font-family:'DM Sans',sans-serif;
+font-weight:600;
+cursor:pointer;
+transition:.25s ease;
+}
+
+button:hover{
+transform:translateY(-3px);
+box-shadow:0 0 40px rgba(245,200,66,.28);
+}
+
+.footer{
+margin-top:30px;
+color:var(--muted);
+font-size:.95rem;
+}
+
+.fade{opacity:0;transform:translateY(28px);transition:.7s ease}
+.fade.show{opacity:1;transform:translateY(0)}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<section>
+
+<div class="hero-emoji">🧸💗✨</div>
+
+<div class="chip">A NOTE FROM MANAV</div>
+
+<h1 class="fade">For <em>Tajnoor</em></h1>
+<h2 class="fade">From Manav</h2>
+
+<div class="card fade">
+
+<p>
+Hey my beautiful Tajnoor 🧸💗,
+I know the past few days haven’t been easy for you...
+and med school can feel overwhelming sometimes ✨
+</p>
+
+<p>
+But I just want you to remember 💫 —
+you are incredibly strong, smart, and capable.
+You didn’t come this far by accident 🌸
+</p>
+
+<p>
+Even on the days you feel low,
+you're still someone I admire so much 🧸
+I’m always here for you — no matter what 💖
+</p>
+
+<p>
+Take a deep breath, okay? 🌸
+One step at a time. You’ve got this ✨💗
+</p>
+
+<button id="loveBtn">Click me 💌</button>
+
+<p id="loveMessage" style="margin-top:16px;font-weight:600"></p>
+
+</div>
+
+<div class="footer">
+Made with love by Manav 🧸💗✨
+</div>
+
+</section>
+
+<script>
+
+var canvas=document.getElementById('stars');
+var ctx=canvas.getContext('2d');
+
+function resize(){
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+}
+
+resize();
+window.onresize=resize;
+
+var stars=[];
+
+for(var i=0;i<200;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle='white';
+
+for(var i=0;i<stars.length;i++){
+var s=stars[i];
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+}
+
+requestAnimationFrame(draw);
+}
+
+draw();
+
+function createEmoji(){
+var e=document.createElement('div');
+e.className='emoji';
+
+var arr=['💗','✨','💫','🌸','💖','🧸'];
+
+e.innerHTML=arr[Math.floor(Math.random()*arr.length)];
+
+e.style.left=Math.random()*100+'vw';
+e.style.animationDuration=(6+Math.random()*6)+'s';
+
+document.body.appendChild(e);
+
+setTimeout(function(){e.remove()},12000);
+}
+
+setInterval(createEmoji,900);
+
+var btn=document.getElementById('loveBtn');
+
+btn.addEventListener('click',function(){
+var msg=document.getElementById('loveMessage');
+msg.textContent="I love you so much, Tajnoor. Always proud of you ❤️";
+msg.style.opacity=1;
+});
+
+var fades=document.querySelectorAll('.fade');
+
+setTimeout(function(){
+fades.forEach(function(el){el.classList.add('show')});
+},200);
+
+</script>
+
+</body>
+</html>
